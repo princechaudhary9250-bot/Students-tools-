@@ -301,6 +301,202 @@ function convertKm(){
 }
 
 </script>
+<!-- Study Planner -->
+<section class="tool">
+  <h2>📚 Study Planner</h2>
+  <input type="text" id="subject" placeholder="Subject">
+  <input type="time" id="studyTime">
+  <button onclick="addStudy()">Add Study</button>
+  <ul id="studyList"></ul>
+</section>
 
+<!-- GPA / CGPA Calculator -->
+<section class="tool">
+  <h2>🎓 GPA / CGPA Calculator</h2>
+  <input type="number" id="marks1" placeholder="Subject 1 marks">
+  <input type="number" id="marks2" placeholder="Subject 2 marks">
+  <input type="number" id="marks3" placeholder="Subject 3 marks">
+  <input type="number" id="marks4" placeholder="Subject 4 marks">
+  <input type="number" id="marks5" placeholder="Subject 5 marks">
+  <button onclick="calculateCGPA()">Calculate CGPA</button>
+  <p id="cgpaResult"></p>
+</section>
+
+<!-- Exam Countdown -->
+<section class="tool">
+  <h2>⏳ Exam Countdown</h2>
+  <input type="date" id="examDate">
+  <button onclick="startCountdown()">Start Countdown</button>
+  <h3 id="countdownResult"></h3>
+</section>
+
+<script>
+function addStudy() {
+  const subject = document.getElementById("subject").value;
+  const time = document.getElementById("studyTime").value;
+
+  if (!subject || !time) {
+    alert("Subject aur time dono bharo.");
+    return;
+  }
+
+  const li = document.createElement("li");
+  li.textContent = subject + " - " + time;
+  document.getElementById("studyList").appendChild(li);
+
+  document.getElementById("subject").value = "";
+  document.getElementById("studyTime").value = "";
+}
+
+function calculateCGPA() {
+  const inputs = [
+    "marks1", "marks2", "marks3", "marks4", "marks5"
+  ];
+
+  let total = 0;
+  let count = 0;
+
+  inputs.forEach(id => {
+    const value = Number(document.getElementById(id).value);
+    if (value > 0) {
+      total += value;
+      count++;
+    }
+  });
+
+  if (count === 0) {
+    document.getElementById("cgpaResult").textContent =
+      "Marks enter karo.";
+    return;
+  }
+
+  const percentage = total / count;
+  const cgpa = percentage / 9.5;
+
+  document.getElementById("cgpaResult").textContent =
+    "Approx CGPA: " + cgpa.toFixed(2);
+}
+
+function startCountdown() {
+  const date = document.getElementById("examDate").value;
+
+  if (!date) {
+    alert("Exam date select karo.");
+    return;
+  }
+
+  const exam = new Date(date + "T00:00:00");
+  const now = new Date();
+
+  const difference = exam - now;
+  const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+  if (days < 0) {
+    document.getElementById("countdownResult").textContent =
+      "Exam date already passed.";
+  } else {
+    document.getElementById("countdownResult").textContent =
+      days + " days remaining 📅";
+  }
+}
+</script><!-- Study Planner -->
+<section class="tool">
+  <h2>📚 Study Planner</h2>
+  <input type="text" id="subject" placeholder="Subject">
+  <input type="time" id="studyTime">
+  <button onclick="addStudy()">Add Study</button>
+  <ul id="studyList"></ul>
+</section>
+
+<!-- GPA / CGPA Calculator -->
+<section class="tool">
+  <h2>🎓 GPA / CGPA Calculator</h2>
+  <input type="number" id="marks1" placeholder="Subject 1 marks">
+  <input type="number" id="marks2" placeholder="Subject 2 marks">
+  <input type="number" id="marks3" placeholder="Subject 3 marks">
+  <input type="number" id="marks4" placeholder="Subject 4 marks">
+  <input type="number" id="marks5" placeholder="Subject 5 marks">
+  <button onclick="calculateCGPA()">Calculate CGPA</button>
+  <p id="cgpaResult"></p>
+</section>
+
+<!-- Exam Countdown -->
+<section class="tool">
+  <h2>⏳ Exam Countdown</h2>
+  <input type="date" id="examDate">
+  <button onclick="startCountdown()">Start Countdown</button>
+  <h3 id="countdownResult"></h3>
+</section>
+
+<script>
+function addStudy() {
+  const subject = document.getElementById("subject").value;
+  const time = document.getElementById("studyTime").value;
+
+  if (!subject || !time) {
+    alert("Subject aur time dono bharo.");
+    return;
+  }
+
+  const li = document.createElement("li");
+  li.textContent = subject + " - " + time;
+  document.getElementById("studyList").appendChild(li);
+
+  document.getElementById("subject").value = "";
+  document.getElementById("studyTime").value = "";
+}
+
+function calculateCGPA() {
+  const inputs = [
+    "marks1", "marks2", "marks3", "marks4", "marks5"
+  ];
+
+  let total = 0;
+  let count = 0;
+
+  inputs.forEach(id => {
+    const value = Number(document.getElementById(id).value);
+    if (value > 0) {
+      total += value;
+      count++;
+    }
+  });
+
+  if (count === 0) {
+    document.getElementById("cgpaResult").textContent =
+      "Marks enter karo.";
+    return;
+  }
+
+  const percentage = total / count;
+  const cgpa = percentage / 9.5;
+
+  document.getElementById("cgpaResult").textContent =
+    "Approx CGPA: " + cgpa.toFixed(2);
+}
+
+function startCountdown() {
+  const date = document.getElementById("examDate").value;
+
+  if (!date) {
+    alert("Exam date select karo.");
+    return;
+  }
+
+  const exam = new Date(date + "T00:00:00");
+  const now = new Date();
+
+  const difference = exam - now;
+  const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+  if (days < 0) {
+    document.getElementById("countdownResult").textContent =
+      "Exam date already passed.";
+  } else {
+    document.getElementById("countdownResult").textContent =
+      days + " days remaining 📅";
+  }
+}
+    </script>
 </body>
 </html>
