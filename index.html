@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Tools</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  color:#222;
+}
+header{
+  background:#2563eb;
+  color:white;
+  text-align:center;
+  padding:25px 15px;
+}
+header h1{margin:0;font-size:30px}
+header p{margin:8px 0 0}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.tools{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+}
+
+.tool{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 3px 12px #0001;
+}
+
+.tool h2{
+  margin-top:0;
+  color:#2563eb;
+}
+
+input,button,select{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:16px;
+}
+
+button{
+  background:#2563eb;
+  color:white;
+  border:0;
+  cursor:pointer;
+}
+
+button:hover{background:#1d4ed8}
+
+.result{
+  background:#eef4ff;
+  padding:10px;
+  border-radius:8px;
+  margin-top:8px;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#666;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎓 Student Tools</h1>
+  <p>Free useful tools for students</p>
+</header>
+
+<div class="container">
+
+<div class="tools">
+
+<!-- Calculator -->
+<div class="tool">
+<h2>🧮 Calculator</h2>
+
+<input type="text" id="calc" placeholder="Example: 25+10*2">
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="calcResult">Answer will appear here</div>
+</div>
+
+
+<!-- Percentage -->
+<div class="tool">
+<h2>📊 Percentage Calculator</h2>
+
+<input type="number" id="marks" placeholder="Obtained Marks">
+<input type="number" id="total" placeholder="Total Marks">
+
+<button onclick="percentage()">Calculate</button>
+
+<div class="result" id="percentageResult">Result will appear here</div>
+</div>
+
+
+<!-- Age Calculator -->
+<div class="tool">
+<h2>🎂 Age Calculator</h2>
+
+<input type="date" id="dob">
+
+<button onclick="ageCalculator()">Calculate Age</button>hb
+
+<div class="result" id="ageResult">Your age will appear here</div>
+</div>
+
+
+<!-- Study Timer -->
+<div class="tool">
+<h2>⏱️ Study Timer</h2>
+
+<input type="number" id="minutes" placeholder="Minutes">
+
+<button onclick="startTimer()">Start Timer</button>
+<button onclick="stopTimer()">Stop</button>
+
+<div class="result" id="timer">00:00</div>
+</div>
+
+
+<!-- To Do -->
+<div class="tool">
+<h2>📝 To-Do List</h2>
+
+<input type="text" id="task" placeholder="Enter your task">
+
+<button onclick="addTask()">Add Task</button>
+
+<ul id="taskList"></ul>
+</div>
+
+
+<!-- Unit Converter -->
+<div class="tool">
+<h2>📏 Unit Converter</h2>
+
+<input type="number" id="km" placeholder="Kilometers">
+
+<button onclick="convertKm()">Convert to Meters</button>
+
+<div class="result" id="meterResult">Result will appear here</div>
+</div>
+
+</div>
+</div>
+
+<footer>
+© 2026 Student Tools | Made for Students
+</footer>
+
+
+<script>
+
+function calculate(){
+  let value=document.getElementById("calc").value;
+
+  try{
+    let answer=Function('"use strict";return ('+value+')')();
+    document.getElementById("calcResult").innerText="Answer: "+answer;
+  }catch{
+    document.getElementById("calcResult").innerText="Please enter a valid calculation.";
+  }
+}
+
+
+function percentage(){
+  let marks=parseFloat(document.getElementById("marks").value);
+  let total=parseFloat(document.getElementById("total").value);
+
+  if(total>0){
+    let result=(marks/total)*100;
+    document.getElementById("percentageResult").innerText=
+    "Percentage: "+result.toFixed(2)+"%";
+  }else{
+    document.getElementById("percentageResult").innerText=
+    "Please enter valid marks.";
+  }
+}
+
+
+function ageCalculator(){
+
+  let dob=new Date(document.getElementById("dob").value);
+  let today=new Date();
+
+  if(!document.getElementById("dob").value){
+    document.getElementById("ageResult").innerText="Please select your date of birth.";
+    return;
+  }
+
+  let age=today.getFullYear()-dob.getFullYear();
+
+  let month=today.getMonth()-dob.getMonth();
+
+  if(month<0 || (month===0 && today.getDate()<dob.getDate())){
+    age--;
+  }
+
+  document.getElementById("ageResult").innerText=
+  "Your Age: "+age+" years";
+}
+
+
+let timerInterval;
+let remaining=0;
+
+function startTimer(){
+
+  let minutes=parseInt(document.getElementById("minutes").value);
+
+  if(!minutes || minutes<=0){
+    alert("Please enter minutes");
+    return;
+  }
+
+  clearInterval(timerInterval);
+
+  remaining=minutes*60;
+
+  timerInterval=setInterval(function(){
+
+    let min=Math.floor(remaining/60);
+    let sec=remaining%60;
+
+    document.getElementById("timer").innerText=
+    String(min).padStart(2,"0")+":"+
+    String(sec).padStart(2,"0");
+
+    if(remaining<=0){
+      clearInterval(timerInterval);
+      alert("Study time completed!");
+    }
+
+    remaining--;
+
+  },1000);
+}
+
+
+function stopTimer(){
+  clearInterval(timerInterval);
+}
+
+
+function addTask(){
+
+  let task=document.getElementById("task").value;
+
+  if(task.trim()==="") return;
+
+  let li=document.createElement("li");
+
+  li.innerText=task;
+  li.style.margin="8px 0";
+  li.style.cursor="pointer";
+
+  li.onclick=function(){
+    li.remove();
+  };
+
+  document.getElementById("taskList").appendChild(li);
+
+  document.getElementById("task").value="";
+}
+
+
+function convertKm(){
+
+  let km=parseFloat(document.getElementById("km").value);
+
+  if(!isNaN(km)){
+    document.getElementById("meterResult").innerText=
+    km+" km = "+(km*1000)+" meters";
+  }else{
+    document.getElementById("meterResult").innerText=
+    "Please enter kilometers.";
+  }
+}
+
+</script>
+
+</body>
+</html>
